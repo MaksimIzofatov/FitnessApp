@@ -23,9 +23,10 @@ namespace FitnessAppBL.Controller
         /// Создание нового контроллера приложения
         /// </summary>
         /// <param name="user"> Пользователь </param>
-        public UserController(User user)
+        public UserController(string userName, string genderName, DateTime birthDay, double weight, double growth)
         {
-            User = user ?? throw new ArgumentNullException("Пользователь не может быть равен null", nameof(user));
+            var gender = new Gender(genderName);
+            User = new User(userName, gender, birthDay, weight, growth);
         }
 
         /// <summary>
@@ -45,13 +46,17 @@ namespace FitnessAppBL.Controller
         /// Загрузить данные пользвотеля
         /// </summary>
         /// <returns> Пользователь приложения </returns>
-        public User Load()
+        public UserController()
         {
             var formatter = new BinaryFormatter();
 
             using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
-                return formatter.Deserialize(fs) as User;
+                if(formatter.Deserialize(fs) is User user)
+                {
+                    User = user;
+                }
+                //TODO: Что делать, если пользователя не прочитали 
             }
         }
     }
