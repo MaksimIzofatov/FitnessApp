@@ -2,6 +2,7 @@
 
 namespace FitnessAppBL.Model
 {
+    [Serializable]
     /// <summary>
     /// Пол
     /// </summary>

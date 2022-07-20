@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FitnessAppBL.Model
 {
+    [Serializable]
     public class User
     { 
         #region Свойства
