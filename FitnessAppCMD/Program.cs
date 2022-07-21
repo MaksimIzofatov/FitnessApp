@@ -12,13 +12,16 @@ namespace FitnessAppCMD
     {
         static void Main(string[] args)
         {
+            Console.InputEncoding = Encoding.Unicode;
+            Console.OutputEncoding = Encoding.Unicode;
             Console.WriteLine("Вас приветствует приложение FitnessApp");
-            
+
             Console.WriteLine("Введите имя пользователя");
             string name = Console.ReadLine();
 
 
             var userController = new UserController(name);
+            var eatingController = new EatingController(userController.CurrentUser);
 
             if (userController.IsNewUser)
             {
@@ -30,7 +33,36 @@ namespace FitnessAppCMD
                 userController.SetUserData(gender, birthDay, weight, growth);
             }
             Console.WriteLine(userController.CurrentUser);
+
+            Console.WriteLine("Выберите действие: ");
+            Console.WriteLine("E - Что вы съели?");
+            var key = Console.ReadKey(true);
+            if (key.Key == ConsoleKey.E || key.Key == ConsoleKey.T)
+            {
+                var eating = EnterEating();
+                eatingController.Add(eating.food, eating.weight);
+                foreach (var item in eatingController.Eating.Foods)
+                {
+                    Console.WriteLine(item.Key + " - " + item.Value);
+                }
+            }
             Console.ReadLine();
+        }
+
+        private static (Food food, double weight) EnterEating()
+        {
+            Console.Write($"Имя продукта: ");
+            string foodName = Console.ReadLine();
+
+            double calories = ParseDouble("калорийность");
+            double proteins = ParseDouble("белки");
+            double fats = ParseDouble("жиры");
+            double carbs = ParseDouble("углеводы");
+
+            double weight = ParseDouble("вес порции");
+            var product = new Food(foodName, proteins, fats, carbs, calories);
+
+            return (product, weight);
         }
 
         private static DateTime ParseDateTime()
@@ -56,7 +88,7 @@ namespace FitnessAppCMD
                 if (double.TryParse(Console.ReadLine(), out double value))
                     return value;
                 else
-                    Console.WriteLine($"Неверный формат {name}а");
+                    Console.WriteLine($"Неверный формат поля {name}");
             }
         }
     }

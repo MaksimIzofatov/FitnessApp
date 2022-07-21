@@ -70,7 +70,7 @@ namespace FitnessAppBL.Model
             Name = name;
         }
 
-        public int Age { get => DateTime.Now.Year - BirthDate.Year; }
+        public int Age => DateTime.Now.Year - BirthDate.Year; 
 
         public override string ToString() => Name + " " + Age;
     }
