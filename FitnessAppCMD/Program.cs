@@ -56,7 +56,7 @@ namespace FitnessAppCMD
                 if (double.TryParse(Console.ReadLine(), out double value))
                     return value;
                 else
-                    Console.WriteLine($"Неверный формат {name}");
+                    Console.WriteLine($"Неверный формат {name}а");
             }
         }
     }
