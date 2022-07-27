@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
+using System.Resources;
 
 namespace FitnessAppCMD
 {
@@ -12,11 +14,14 @@ namespace FitnessAppCMD
     {
         static void Main(string[] args)
         {
+            //var culture = CultureInfo.CurrentCulture;
+            var culture = CultureInfo.CreateSpecificCulture("en-us");
+            var resourceManager = new ResourceManager("FitnessAppCMD.Languales.Messages", typeof(Program).Assembly);
             Console.InputEncoding = Encoding.Unicode;
             Console.OutputEncoding = Encoding.Unicode;
-            Console.WriteLine("Вас приветствует приложение FitnessApp");
+            Console.WriteLine(resourceManager.GetString("hello", culture));
 
-            Console.WriteLine("Введите имя пользователя");
+            Console.WriteLine(resourceManager.GetString("inputName", culture));
             string name = Console.ReadLine();
 
 
